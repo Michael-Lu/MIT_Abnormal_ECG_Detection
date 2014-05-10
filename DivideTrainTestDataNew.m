@@ -1,4 +1,4 @@
-function [ Train, Test ] = DivideTrainTestDataNew( DataList, ratio_testing, testing_PR )
+function [ Train, Test ] = DivideTrainTestDataNew( DataList, num_parts, testing_PR )
 % Divide the Data into TrainingSet and TestingSet according to the TestRatio.
 % The input, DataList can be a cell array or a numerical array, and the output Train and Test
 % are both non-overlapping parts retrieve from the input DataList. Each row of
@@ -9,13 +9,16 @@ function [ Train, Test ] = DivideTrainTestDataNew( DataList, ratio_testing, test
 % the range of 1 to ceil(N/M). If the testing_PR is set to be ceil(N/M),
 % then the testing data contains the records of which position is between
 % M*(ceil(M/N)-1) and N.
-
+    if (num_parts - floor(num_parts)) > 0
+        throw( MException('DivideTrainTestDataNew:WrongType','The input, num_parts should be an integer') );
+    end
+    
     numTotalRec = size(DataList,1);
     if numTotalRec == 0
         throw( MException('DivideTrainTestDataNew:InputZeroSize','The input is of zero size!') );
     end
     
-    numTestRec = floor(numTotalRec*ratio_testing);
+    numTestRec = ceil(numTotalRec/num_parts);
     assert(numTestRec > 0);
     
     if testing_PR < 1 || testing_PR > ceil(numTotalRec/numTestRec)
