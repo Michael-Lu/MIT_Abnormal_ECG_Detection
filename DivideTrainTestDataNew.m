@@ -11,7 +11,12 @@ function [ Train, Test ] = DivideTrainTestDataNew( DataList, ratio_testing, test
 % M*(ceil(M/N)-1) and N.
 
     numTotalRec = size(DataList,1);
+    if numTotalRec == 0
+        throw( MException('DivideTrainTestDataNew:InputZeroSize','The input is of zero size!') );
+    end
+    
     numTestRec = floor(numTotalRec*ratio_testing);
+    assert(numTestRec > 0);
     
     if testing_PR < 1 || testing_PR > ceil(numTotalRec/numTestRec)
         throw( MException('DivideTrainTestDataNew:OutofRange','testing_PR is out of range!') );
