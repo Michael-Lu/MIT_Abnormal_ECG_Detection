@@ -1,0 +1,2 @@
+Use Classify.bat to move each person's image to the particular folder.
+Now, ID100~ID105 have finished permutation

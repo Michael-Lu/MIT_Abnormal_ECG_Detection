@@ -1,0 +1,14 @@
+*.asv
+*.jp2
+*.bmp
+retrieved_ECG*.mat
+ID100/*
+ID100_lossy/*
+ID100_lossless/*
+image_mat_2/*
+image_mat_3/*
+perm_image/*
+perm_image_ID100/*
+testbench/*
+MIT-BIH arrhythmia database/*
+
