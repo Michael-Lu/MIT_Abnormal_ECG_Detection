@@ -14,9 +14,10 @@ function [ Train, Test ] = DivideTrainTestDataNew( DataList, num_parts, testing_
     end
     
     numTotalRec = size(DataList,1);
-    if numTotalRec == 0
-        throw( MException('DivideTrainTestDataNew:InputZeroSize','The input is of zero size!') );
+    if numTotalRec < 2
+        throw( MException('DivideTrainTestDataNew:InputZeroSize','The input should at least be greater than two!') );
     end
+    
     
     numTestRec = ceil(numTotalRec/num_parts);
     assert(numTestRec > 0);
