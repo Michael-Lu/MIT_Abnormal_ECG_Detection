@@ -5,17 +5,21 @@ function [TrainNormal, TrainAbNormal, NormParameters] = NormalizeFeature_Train(N
     % returning NormParameters to NormalizeFeature_Test() to Normalize the
     % Feature sets of testing data according to the training data.
     % 
-    %The input should be the cell arrays of the trainning Features.
+    % The input should be the cell arrays of the trainning Features.
     % 
     % This function should be maintained both with NormalizeFeature_Test()
+    if size(NormTrainFea,2) ~= size(AbTrainFea,2)
+        throw( MException('NormalizeFeature_Train:LengthMisMatch',...
+            'The number of feature sets in NormalTrain isn''t equal to that in AbNormalTrain') );
+    end
+    
     TrainNormal = cell2mat(NormTrainFea);
     TrainAbNormal = cell2mat(AbTrainFea);
     
-    
-    FieldLen.RR = size(NormTrain{1,5}, 2);
-    FieldLen.LL = size(NormTrain{1,6}, 2);
-    FieldLen.ColEnergyLL = size(NormTrain{1,7}, 2);
-    FieldLen.SubEnergyLL = size(NormTrain{1,7}, 2);
-    NormParmeters = {FieldLen};
+    FieldLen = [];
+    for n = 1:size(NormTrainFea,2)
+        FieldLen = [FieldLen, size(NormTrainFea{1,n}, 2)];
+    end
+    NormParameters = {FieldLen};
 end
 
