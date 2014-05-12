@@ -34,8 +34,8 @@ for m = 1:size(InputDomain,2)
         
     end
         
-    [Train.Normal, Train.AbNormal, NormParmeters] = NormalizeFeature_Train( NormTrain(:,5:8), AbTrain(:,5:8) );
-    [Test.Normal, Test.AbNormal] = NormalizeFeature_Test(NormParmeters, NormTest(:,5:8), AbTest(:,5:8) );
+    [Train.Normal, Train.AbNormal, NormParameters] = NormalizeFeature_Train( NormTrain(:,5:8), AbTrain(:,5:8) );
+    [Test.Normal, Test.AbNormal] = NormalizeFeature_Test(NormParameters, NormTest(:,5:8), AbTest(:,5:8) );
     
     
 end
