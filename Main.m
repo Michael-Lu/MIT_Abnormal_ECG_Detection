@@ -14,6 +14,7 @@ load DataListNew
 err = zeros(size(InputDomain,2), num_parts);
 sensitivity = zeros(size(InputDomain,2), num_parts);
 specificity = zeros(size(InputDomain,2), num_parts);
+ignore_DataCompidx = [];
 for m = 1:size(InputDomain,2)
     %% Separate out the Normal and Abnormal Data Sets in a Person.
     targetPer = InputDomain(m);
@@ -28,7 +29,8 @@ for m = 1:size(InputDomain,2)
                 [targetPer, size(NormalDataList,1), ceil(size(NormalDataList,1)/num_parts),...
                            size(AbNormalDataList,1), ceil(size(AbNormalDataList,1)/num_parts)] 
                 ];
-    if size(NormalDataList,1) == 0 || size(AbNormalDataList,1) == 0
+    if size(NormalDataList,1) < 2  || size(AbNormalDataList,1) < 2
+        ignore_DataCompidx = [ignore_DataCompidx; m];
         continue
     end
     
@@ -71,7 +73,13 @@ for m = 1:size(InputDomain,2)
     
     
 end
-
+%% Dispaly the Componets of Data
+display('Ignore')
 display('---Person NormalTrain NormalTest AbnormalTrain AbnormalTest---')
-DataComponent()
-
+DataComp(ignore_DataCompidx,:)
+display('Analyzed')
+display('---Person NormalTrain NormalTest AbnormalTrain AbnormalTest---')
+mask_ = ones(1,size(DataComp,1));
+mask_(ignore_DataCompidx) = 0;
+mask_ = logical(mask_);
+[DataComp(mask_,:) sensitivity(mask_,:) specificity(mask_,:) err(mask_,:)]
